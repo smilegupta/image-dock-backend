@@ -1,0 +1,26 @@
+{
+  "name": "image-dock-backend",
+  "version": "1.0.0",
+  "description": "Image Uploader",
+  "main": "uploadImage.js",
+  "scripts": {
+    "bundle": "./node_modules/.bin/webpack"
+  },
+  "devDependencies": {
+    "aws-sdk":"2.885.0",
+    "webpack": "^5.17.0",
+    "webpack-cli": "^4.4.0",
+    "zip-webpack-plugin": "^4.0.1"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smilegupta/image-dock-backend.git"
+  },
+  "author": "Smile Gupta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smilegupta/image-dock-backend/issues"
+  },
+  "homepage": "https://github.com/smilegupta/image-dock-backend#readme"
+}

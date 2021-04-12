@@ -1,0 +1,63 @@
+service: image-dock-backend
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "s3:*"
+      Resource: ["arn:aws:s3:::image-dock-uploads/*"]
+
+resouces:
+  Resources:
+    ImageDockBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: image-dock-uploads
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+              AllowedOrigins:
+                - "*"
+    ImageDockBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: ImageDockBucket
+        PolicyDocument:
+          Statement:
+            - Action:
+                - "s3:GetObject"
+              Effect: "Allow"
+              Resource: "arn:aws:s3:::image-dock-uploads/*"
+              Principal: "*"
+            - Action:
+                - "s3:PutObject"
+              Effect: "Allow"
+              Resource: "arn:aws:s3:::image-dock-uploads/*"
+              Principal: "*"
+
+functions:
+  s3Upload:
+    handler: S3Upload/index.handler
+    timeout: 300
+    package:
+      individually: true
+      artifact: "./dist/S3Upload.zip"
+    name: uploadImage
+    cors: true
+    integration: lambda
+    events:
+      - http:
+          path: upload
+          method: post
+          cors: true
+          integration: lambda
+    environment: 
+      S3_BUCKET: 'image-dock-assets'
