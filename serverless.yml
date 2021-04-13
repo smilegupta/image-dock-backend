@@ -7,14 +7,14 @@ provider:
     - Effect: Allow
       Action:
         - "s3:*"
-      Resource: ["arn:aws:s3:::image-dock-uploads/*"]
+      Resource: ["arn:aws:s3:::image-dock-uploads-be/*"]
 
 resouces:
   Resources:
     ImageDockBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: image-dock-uploads
+        BucketName: image-dock-uploads-be
         CorsConfiguration:
           CorsRules:
             - AllowedHeaders:
@@ -35,12 +35,12 @@ resouces:
             - Action:
                 - "s3:GetObject"
               Effect: "Allow"
-              Resource: "arn:aws:s3:::image-dock-uploads/*"
+              Resource: "arn:aws:s3:::image-dock-uploads-be/*"
               Principal: "*"
             - Action:
                 - "s3:PutObject"
               Effect: "Allow"
-              Resource: "arn:aws:s3:::image-dock-uploads/*"
+              Resource: "arn:aws:s3:::image-dock-uploads-be/*"
               Principal: "*"
 
 functions:
@@ -60,4 +60,4 @@ functions:
           cors: true
           integration: lambda
     environment: 
-      S3_BUCKET: 'image-dock-assets'
+      S3_BUCKET: 'image-dock-uploads-be'
