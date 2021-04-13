@@ -86,5 +86,17 @@ functions:
           path: collection
           method: post
           cors: true
+      - http:
+          path: collection/:collectionId
+          method: get
+          cors: true
+      - http:
+          path: collection
+          method: get
+          cors: true
+      - http:
+          path: collection/image
+          method: post
+          cors: true
     environment: 
       USER_IMAGES_TABLENAME: 'UserImages'
