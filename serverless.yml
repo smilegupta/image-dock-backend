@@ -87,7 +87,7 @@ functions:
           method: post
           cors: true
       - http:
-          path: collection/:collectionId
+          path: collection/{collectionId}
           method: get
           cors: true
       - http:
