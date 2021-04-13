@@ -1,5 +1,10 @@
 service: image-dock-backend
 
+useDotenv: true
+
+plugins: 
+  - serverless-dotenv-plugin
+
 provider:
   name: aws
   runtime: nodejs12.x
