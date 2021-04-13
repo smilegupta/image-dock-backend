@@ -8,6 +8,14 @@ provider:
       Action:
         - "s3:*"
       Resource: ["arn:aws:s3:::image-dock-uploads-be/*"]
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: ["arn:aws:dynamodb:ap-south-1:318066470757:table/UserImages"]
 
 resouces:
   Resources:
@@ -61,3 +69,17 @@ functions:
           integration: lambda
     environment: 
       S3_BUCKET: 'image-dock-uploads-be'
+  imageDock:
+    handler: ImageDock/index.handler
+    package:
+      individually: true
+      artifact: "./dist/ImageDock.zip"
+    name: imageDock
+    cors: true
+    events:
+      - http:
+          path: collection
+          method: post
+          cors: true
+    environment: 
+      USER_IMAGES_TABLENAME: 'UserImages'
