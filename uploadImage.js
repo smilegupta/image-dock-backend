@@ -5,6 +5,7 @@ const { S3_BUCKET } = process.env;
 const s3 = new AWS.S3();
 
 exports.handler = async (event, context, callback) => {
+  console.log(event)
   const base64EncodedData = event["url"];
 
   // Ensure that you POST a base64 data to your server.
