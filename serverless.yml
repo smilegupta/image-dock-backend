@@ -20,7 +20,7 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: ["arn:aws:dynamodb:ap-south-1:318066470757:table/UserImages"]
+      Resource: ["arn:aws:dynamodb:ap-south-1:318066470757:table/UserImages", "arn:aws:dynamodb:ap-south-1:318066470757:table/AllImages"]
 
 resouces:
   Resources:
