@@ -59,6 +59,7 @@ async function addingImagetoCollection (input) {
         putItem({
             TableName: "AllImages",
             Item: {
+                client: "ImageDock",
                 createdAt,
                 imageUrl: input.imageUrl
             }
