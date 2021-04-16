@@ -27,6 +27,7 @@ async function createCollection (input){
         body: {collectionId}
     }
 }
+
 async function getCollection(userId, collectionId){
     const res = await queryItems({
         TableName: process.env.USER_IMAGES_TABLENAME,
@@ -52,18 +53,29 @@ async function getCollectionsForUser(userId){
     }
 }
 
-async function addingImagetoCollection (input){
-    await putItem({
-        TableName: process.env.USER_IMAGES_TABLENAME,
-        Item: {
-            userId: input.userId,
-            collectionId: input.collectionId,
-            createdAt: new Date().toISOString(),
-            collectionName: input.collectionName,
-            collectionDescription: input.collectionDescription,
-            imageUrl: input.imageUrl
-        }
-    });
+async function addingImagetoCollection (input) {
+    const createdAt = new Date().toISOString();
+    const promises = [
+        putItem({
+            TableName: "AllImages",
+            Item: {
+                createdAt,
+                imageUrl: input.imageUrl
+            }
+        }),
+        putItem({
+            TableName: process.env.USER_IMAGES_TABLENAME,
+            Item: {
+                userId: input.userId,
+                collectionId: input.collectionId,
+                createdAt,
+                collectionName: input.collectionName,
+                collectionDescription: input.collectionDescription,
+                imageUrl: input.imageUrl
+            }
+        })
+    ];
+    await Promise.all(promises);
     return {
         statusCode : 200,
         body: "Added Successfully"
