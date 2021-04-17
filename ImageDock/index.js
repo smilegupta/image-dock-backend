@@ -88,7 +88,7 @@ async function getRecentUploads (imageURL) {
         TableName: "PublicImages",
         KeyConditionExpression: `client=:client`, 
         ExpressionAttributeValues: {":client": "ImageDock"},
-        Limit: 10,
+        Limit: 12,
         ScanIndexForward: false
     });
     return{
