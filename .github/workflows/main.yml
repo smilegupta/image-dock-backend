@@ -28,6 +28,14 @@ jobs:
       - name: Build Project
         run: npm run bundle
 
+      - name: API DOCS Deploy
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cd ApiDocs/
+          serverless deploy --region ap-south-1 --verbose
+          cd ..
+
       - name: Deploy dev
         if: github.ref == 'refs/heads/master'
         run: serverless deploy --region ap-south-1 --verbose
+

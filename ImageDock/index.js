@@ -8,7 +8,7 @@ const headers = {
     "Access-Control-Allow-Credentials": true
   };
 
-/*
+/**
  * @apiName Create collection
  * @apiGroup Collection
  * @api {post} /collection    Create collection for a user
@@ -16,6 +16,8 @@ const headers = {
  * @apiParam {String} userId   userId of the person from whom the collection is getting created
  * @apiParam {String} collectionName   name of the collection
  * @apiParam {String} [collectionDescription]   collection's description
+ * @apiContentType application/json
+ * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/collection
 */
 async function createCollection(input) {
     const collectionId = uuid.v4();
@@ -45,13 +47,15 @@ async function createCollection(input) {
     }
 }
 
-/*
+/**
  * @apiName Get collection
  * @apiGroup Collection
- * @api {get} /collection/image    Get collection details and images in a collection
+ * @api {get} /collection/{collectionId}   Get collection details and images in a collection
  *
  * @apiParam {String} collectionId     id of the collection for which the data is requested for
  * @apiParam {String} userId           userId of the person logged-in
+ * @apiContentType application/json
+ * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/collection/{collectionId}
 */
 async function getCollection(userId, collectionId) {
     const res = await queryItems({
@@ -68,13 +72,14 @@ async function getCollection(userId, collectionId) {
 }
 
 
-/*
+/** 
  * @apiName Get list of collections of the user
- * @apiGroup Recent Uploads
- * @api {get} /collection    Get collection details and images in a collection
- 
+ * @apiGroup Collection
+ * @api {get} /collection    Get collection details which a user have
  * @apiParam {String} collectionId     id of the collection for which the data is requested for
  * @apiParam {String} userId           userId of the person logged-in
+  * @apiContentType application/json
+ * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/collection
 */
 async function getCollectionsForUser(userId) {
     const res = await queryItems({
@@ -89,7 +94,7 @@ async function getCollectionsForUser(userId) {
     }
 }
 
-/*
+/** 
  * @apiName Add image to collection
  * @apiGroup Collection
  * @api {post} /collection    Adding an image to a collection
@@ -99,6 +104,8 @@ async function getCollectionsForUser(userId) {
  * @apiParam {String} collectionName   name of the collection to which the image is getting added
  * @apiParam {String} collectionDescription   description of the collection to which the image is getting added 
  * @apiParam {String} imageUrl         image URL getting added to the collection
+ * @apiContentType application/json
+ * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/collection
 */
 async function addingImagetoCollection(input) {
     const createdAt = new Date().toISOString();
@@ -124,11 +131,12 @@ async function addingImagetoCollection(input) {
 }
 
 
-/*
+/** 
  * @apiName Get recent uploads
  * @apiGroup Recent Uploads
  * @api {get} /recent-uploads    Get the recent image uploads
- * 
+ * @apiContentType application/json
+ * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/recent-uploads
 */
 async function getRecentUploads (imageURL) {
     const res = await queryItems({
@@ -145,11 +153,12 @@ async function getRecentUploads (imageURL) {
     } 
 }
 
-/*
+/** 
  * @apiName Get recent uploads
  * @apiGroup Recent Uploads
  * @api {get} /recent-uploads    Get the recent image uploads
- * 
+ * @apiContentType application/json
+ * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/recent-uploads
 */
 async function storeImage(imageUrl) {
     const createdAt = new Date().toISOString();
