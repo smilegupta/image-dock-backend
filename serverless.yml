@@ -20,7 +20,7 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: ["arn:aws:dynamodb:ap-south-1:318066470757:table/UserImages", "arn:aws:dynamodb:ap-south-1:318066470757:table/AllImages"]
+      Resource: ["arn:aws:dynamodb:ap-south-1:318066470757:table/UserImages", "arn:aws:dynamodb:ap-south-1:318066470757:table/PublicImages"]
 
 resouces:
   Resources:
@@ -96,6 +96,14 @@ functions:
           cors: true
       - http:
           path: collection/image
+          method: post
+          cors: true
+      - http:
+          path: recent-uploads
+          method: get
+          cors: true
+      - http:
+          path: image-store
           method: post
           cors: true
     environment: 

@@ -57,14 +57,6 @@ async function addingImagetoCollection (input) {
     const createdAt = new Date().toISOString();
     const promises = [
         putItem({
-            TableName: "AllImages",
-            Item: {
-                client: "ImageDock",
-                createdAt,
-                imageUrl: input.imageUrl
-            }
-        }),
-        putItem({
             TableName: process.env.USER_IMAGES_TABLENAME,
             Item: {
                 userId: input.userId,
@@ -82,6 +74,38 @@ async function addingImagetoCollection (input) {
         body: "Added Successfully"
     }
 }
+async function getRecentUploads (imageURL) {
+    const res = await queryItems({
+        TableName: "PublicImages",
+        KeyConditionExpression: `client=:client`, 
+        ExpressionAttributeValues: {":client": "ImageDock"},
+        Limit: 10,
+        ScanIndexForward: false
+    });
+    return{
+        statusCode: 200,
+        body: res.Items.map(r => r.imageUrl)
+    }
+}
+
+async function storeImage (imageUrl){
+    const createdAt = new Date().toISOString();
+    const promises = [
+        putItem({
+            TableName: PublicImages,
+            Item: {
+                client: "ImageDock",
+                createdAt,
+                imageUrl: imageUrl
+            }
+        })
+    ];
+    await Promise.all(promises);
+    return {
+        statusCode : 200,
+        body: "Added Successfully"
+    }
+};
 
 exports.handler = async (event, context) => {
     console.log(event);
@@ -101,6 +125,13 @@ exports.handler = async (event, context) => {
     }
     if (httpMethod === "POST" && resource === "/collection/image"){
         return addingImagetoCollection(body);
+    }
+    if(httpMethod === "GET" && resource === "/recent-uploads"){
+        const imageUrl = queryParams.imageUrl;
+        return getRecentUploads(imageUrl);
+    }
+    if(httpMethod === "POST" && resource === '/image-store'){
+        return storeImage(body.imageURL);
     }
     
 }
