@@ -24,7 +24,8 @@ async function createCollection (input){
     });
     return {
         statusCode : 200,
-        message: {collectionId}
+        body: JSON.stringify({collectionId})
+        
     }
 }
 
@@ -37,7 +38,7 @@ async function getCollection(userId, collectionId){
     });
     return{
         statusCode: 200,
-        message: res.Items
+        body: JSON.stringify(res.Items)
     }
 }
 
@@ -49,7 +50,7 @@ async function getCollectionsForUser(userId){
     });
     return{
         statusCode: 200,
-        message: res.Items
+        body: JSON.stringify(res.Items)
     }
 }
 
@@ -71,7 +72,7 @@ async function addingImagetoCollection (input) {
     await Promise.all(promises);
     return {
         statusCode : 200,
-        message: "Added Successfully"
+        body: "Added Successfully"
     }
 }
 async function getRecentUploads (imageURL) {
@@ -84,7 +85,7 @@ async function getRecentUploads (imageURL) {
     });
     return{
         statusCode: 200,
-        message: res.Items.map(r => r.imageUrl)
+        body: JSON.stringify(res.Items.map(r => r.imageUrl))
     }
 }
 
@@ -103,7 +104,7 @@ async function storeImage (imageUrl){
     await Promise.all(promises);
     return {
         statusCode : 200,
-        message: "Added Successfully"
+        body: "Added Successfully"
     }
 };
 
