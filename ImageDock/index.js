@@ -1,6 +1,10 @@
 const {putItem,queryItems} = require("./db-helpers");
 const {getInputParams} = require("./utils");
 const uuid = require('uuid');
+const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": true
+  };
 
 async function createCollection (input){
     const collectionId = uuid.v4();
@@ -23,6 +27,7 @@ async function createCollection (input){
         }
     });
     return {
+        headers,
         statusCode : 200,
         body: JSON.stringify({collectionId})
         
@@ -37,6 +42,7 @@ async function getCollection(userId, collectionId){
         ExpressionAttributeValues: {":userId": userId, ":collectionId": collectionId}
     });
     return{
+        headers,
         statusCode: 200,
         body: JSON.stringify(res.Items)
     }
@@ -49,6 +55,7 @@ async function getCollectionsForUser(userId){
         ExpressionAttributeValues: {":userId": userId}
     });
     return{
+        headers,
         statusCode: 200,
         body: JSON.stringify(res.Items)
     }
@@ -71,6 +78,7 @@ async function addingImagetoCollection (input) {
     ];
     await Promise.all(promises);
     return {
+        headers,
         statusCode : 200,
         body: "Added Successfully"
     }
@@ -84,6 +92,7 @@ async function getRecentUploads (imageURL) {
         ScanIndexForward: false
     });
     return{
+        headers,
         statusCode: 200,
         body: JSON.stringify(res.Items.map(r => r.imageUrl))
     }
@@ -103,6 +112,7 @@ async function storeImage (imageUrl){
     ];
     await Promise.all(promises);
     return {
+        headers,
         statusCode : 200,
         body: "Added Successfully"
     }
