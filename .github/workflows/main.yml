@@ -31,6 +31,7 @@ jobs:
       - name: API DOCS Deploy
         if: github.ref == 'refs/heads/master'
         run: |
+          npm run apidoc
           cd ApiDocs/
           serverless deploy --region ap-south-1 --verbose
           cd ..
