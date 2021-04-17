@@ -127,8 +127,7 @@ exports.handler = async (event, context) => {
         return addingImagetoCollection(body);
     }
     if(httpMethod === "GET" && resource === "/recent-uploads"){
-        const imageUrl = queryParams.imageUrl;
-        return getRecentUploads(imageUrl);
+        return getRecentUploads();
     }
     if(httpMethod === "POST" && resource === '/image-store'){
         return storeImage(body.imageURL);
