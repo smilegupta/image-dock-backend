@@ -92,7 +92,7 @@ async function storeImage (imageUrl){
     const createdAt = new Date().toISOString();
     const promises = [
         putItem({
-            TableName: PublicImages,
+            TableName: "PublicImages",
             Item: {
                 client: "ImageDock",
                 createdAt,
