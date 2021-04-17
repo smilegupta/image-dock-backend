@@ -2,3 +2,5 @@ InputSample
 .serverless
 .DS_Store
 node_modules
+
+ApiDocs/html-docs

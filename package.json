@@ -4,9 +4,11 @@
   "description": "Image Uploader",
   "main": "uploadImage.js",
   "scripts": {
-    "bundle": "./node_modules/.bin/webpack"
+    "bundle": "./node_modules/.bin/webpack",
+    "apidoc": "apidoc -i ./ -e node_modules -e ApiDocs -o ApiDocs/html-docs/"
   },
   "devDependencies": {
+    "apidoc": "0.27.1",
     "aws-sdk": "2.885.0",
     "serverless-dotenv-plugin": "^3.9.0",
     "webpack": "^5.17.0",

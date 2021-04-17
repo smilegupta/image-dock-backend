@@ -4,6 +4,14 @@ const { S3_BUCKET } = process.env;
 // Create an s3 instance
 const s3 = new AWS.S3();
 
+/*
+ * @apiName Upload image to S3
+ * @apiGroup Upload Image
+ * @api {post} /upload    Upload images to S3
+ *
+ * @apiParam {String} url The base64 encoded data of the image
+*/
+
 exports.handler = async (event, context, callback) => {
   console.log(event)
   const base64EncodedData = event.body["url"];
