@@ -8,7 +8,7 @@
     "apidoc": "apidoc -i ./ -e node_modules -e ApiDocs -o ApiDocs/html-docs/"
   },
   "devDependencies": {
-    "apidoc": "0.27.1",
+    "apidoc": "0.18.0",
     "aws-sdk": "2.885.0",
     "serverless-dotenv-plugin": "^3.9.0",
     "webpack": "^5.17.0",
