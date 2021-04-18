@@ -25,9 +25,6 @@ jobs:
       - name: Install npm
         run: npm install
 
-      - name: Build Project
-        run: npm run bundle
-
       - name: API DOCS Deploy
         if: github.ref == 'refs/heads/master'
         run: |
@@ -35,6 +32,9 @@ jobs:
           cd ApiDocs/
           serverless deploy --region ap-south-1 --verbose
           cd ..
+          
+      - name: Build Project
+        run: npm run bundle
 
       - name: Deploy dev
         if: github.ref == 'refs/heads/master'
