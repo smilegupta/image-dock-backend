@@ -1,4 +1,4 @@
-[https://image-dock-uploads-be.s3.ap-south-1.amazonaws.com/image.2021-04-18T19%3A42%3A20.791Z]
+![Architecture](https://image-dock-uploads-be.s3.ap-south-1.amazonaws.com/image.2021-04-18T19%3A42%3A20.791Z)
 
 
 ## List of API
