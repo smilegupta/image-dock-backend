@@ -21,16 +21,9 @@ const headers = {
 */
 async function createCollection(input) {
     const collectionId = uuid.v4();
-    console.log({TableName: process.env.USER_IMAGES_TABLENAME,
-        Item: {
-            userId: input.userId,
-            collectionId: collectionId,
-            createdAt: new Date().toISOString(),
-            collectionName: input.collectionName,
-            collectionDescription: input.collectionDescription
-        }})
+    console.log(collectionId)
     await putItem({
-        TableName: process.env.USER_IMAGES_TABLENAME,
+        TableName: "UserCollections",
         Item: {
             userId: input.userId,
             collectionId: collectionId,
@@ -83,7 +76,7 @@ async function getCollection(userId, collectionId) {
 */
 async function getCollectionsForUser(userId) {
     const res = await queryItems({
-        TableName: process.env.USER_IMAGES_TABLENAME,
+        TableName: "UserCollections",
         KeyConditionExpression: `userId=:userId`, 
         ExpressionAttributeValues: {":userId": userId}
     });
@@ -186,6 +179,7 @@ exports.handler = async (event, context) => {
     
     // creating a new collection
     if (httpMethod === "POST" && resource === "/collection"){
+        console.log("I m getting hit")
         return createCollection(body);
     }
     
