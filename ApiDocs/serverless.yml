@@ -1,7 +1,7 @@
 name: image-dock-documentation
 stage: dev
 
-image-doc:
+image-doc-apidoc:
   component: "@serverless/website"
   inputs:
     code:
