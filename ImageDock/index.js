@@ -1,4 +1,4 @@
-const { putItem,queryItems } = require("./db-helpers");
+const { putItem,queryItems, deleteItem } = require("./db-helpers");
 const { getInputParams } = require("./utils");
 const uuid = require('uuid');
 
@@ -118,7 +118,7 @@ async function addingImagetoCollection(input) {
     await Promise.all(promises);
     return {
         headers,
-        statusCode : 200,
+        statusCode : 201,
         body: "Added Successfully"
     }
 }
@@ -168,10 +168,56 @@ async function storeImage(imageUrl) {
     await Promise.all(promises);
     return {
         headers,
-        statusCode : 200,
+        statusCode : 201,
         body: "Added Successfully"
     }
 };
+
+/** 
+ * @apiName Delete Collection
+ * @apiGroup Collection
+ * @api {delete} /collection/{collectionId}   Delete user's Collections
+ * @apiContentType application/json
+ * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/collection/{collectionId}
+*/ 
+async function deleteCollection(collectionId, userId){
+    await deleteItem({
+        TableName:"UserCollections",
+        Key:{
+            collectionId, userId
+        }})
+        return {
+            headers,
+            statusCode : 204,
+            body: "Collection Deleted Successfully"
+        }
+}
+
+/** 
+ * @apiName Update Collection
+ * @apiGroup Collection
+ * @api {put} /collection/{collectionId}   Update user's Collections
+ * @apiContentType application/json
+ * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/collection/{collectionId}
+*/ 
+async function updateCollection(collectionId, body){
+    await updateItem({
+        TableName:"UserCollections",
+        Key:{
+            collectionId, userId
+        },
+        UpdateExpression: "set collectionName = :collectionName, collectionDescription=:collectionDescription",
+        ExpressionAttributeValues:{
+            ":collectionName": body.collectionNam,
+            ":collectionDescription": body.collectionDescription
+        },
+        ReturnValues:"UPDATED_NEW"})
+        return {
+            headers,
+            statusCode : 200,
+            body: "Collection Updated Successfully"
+        }
+}
 
 exports.handler = async (event, context) => {
     console.log("Input to the lambda function", event);
@@ -210,6 +256,19 @@ exports.handler = async (event, context) => {
     // Store the publicly uploaded images for fetching under "recent uploads"
     if(httpMethod === "POST" && resource === '/image-store'){
         return storeImage(body.imageURL);
+    }
+
+    // Deleting a Collection
+    if(httpMethod === "DELETE" && resource === '/collection/{collectionId}'){
+        const collectionId = pathParams.collectionId;
+        const userId = queryParams.userId;
+        return deleteCollection(collectionId, userId);
+    }
+
+    // Updating a Collection
+    if(httpMethod === "PUT" && resource === '/collection/{collectionId}'){
+        const collectionId = pathParams.collectionId;
+        return updateCollection(collectionId, body);
     }
     
 }

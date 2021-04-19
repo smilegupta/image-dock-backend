@@ -106,5 +106,13 @@ functions:
           path: image-store
           method: post
           cors: true
+      - http:
+          path: /collection/{collectionId}
+          method: delete
+          cors: true
+      - http:
+          path: /collection/{collectionId}
+          method: put
+          cors: true
     environment: 
       USER_IMAGES_TABLENAME: 'UserImages'
