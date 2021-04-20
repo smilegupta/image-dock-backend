@@ -1,4 +1,4 @@
-const { putItem,queryItems, deleteItem } = require("./db-helpers");
+const { putItem,queryItems, deleteItem, updateItem} = require("./db-helpers");
 const { getInputParams } = require("./utils");
 const uuid = require('uuid');
 
@@ -204,11 +204,11 @@ async function updateCollection(collectionId, body){
     await updateItem({
         TableName:"UserCollections",
         Key:{
-            collectionId, userId
+            collectionId, userId: body.userId
         },
         UpdateExpression: "set collectionName = :collectionName, collectionDescription=:collectionDescription",
         ExpressionAttributeValues:{
-            ":collectionName": body.collectionNam,
+            ":collectionName": body.collectionName,
             ":collectionDescription": body.collectionDescription
         },
         ReturnValues:"UPDATED_NEW"})
