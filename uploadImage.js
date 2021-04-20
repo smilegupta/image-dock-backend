@@ -4,17 +4,27 @@ const { S3_BUCKET } = process.env;
 // Create an s3 instance
 const s3 = new AWS.S3();
 
+async function uploadImage(params) {
+  // Function to upload image to s3.
+  try {
+    const Location = await s3.upload(params).promise();
+    location = Location.Location;
+  } catch (error) {
+    console.error(error);
+  }
+  return location;
+}
+
 /*
  * @apiName Upload image to S3
  * @apiGroup Upload Image
  * @api {post} /upload    Upload images to S3
  *
  * @apiParam {String} url The base64 encoded data of the image
-*/
-
-exports.handler = async (event, context, callback) => {
-  console.log(event)
-  const base64EncodedData = event.body["url"];
+ */
+exports.handler = async event => {
+  console.log(event);
+  const base64EncodedData = event.body.url;
 
   // Ensure that you POST a base64 data to your server.
   const base64Data = new Buffer.from(
@@ -24,12 +34,12 @@ exports.handler = async (event, context, callback) => {
 
   // Getting the file type, ie: jpeg, png or gif
   const type = base64EncodedData.split(";")[0].split("/")[1];
-  const current_date = new Date().toISOString();
+  const currentDate = new Date().toISOString();
 
   // With this setup, uploads an image.
   const params = {
     Bucket: `${S3_BUCKET}`, // required
-    Key: `image.${current_date}`, // required
+    Key: `image.${currentDate}`, // required
     Body: base64Data,
     ACL: "public-read",
     ContentEncoding: "base64", // required
@@ -39,14 +49,3 @@ exports.handler = async (event, context, callback) => {
   console.log("response", response);
   return response;
 };
-
-async function uploadImage(params) {
-  // Function to upload image to s3.
-  try {
-    const Location = await s3.upload(params).promise();
-    location = Location["Location"];
-  } catch (error) {
-    console.error(error);
-  }
-  return location;
-}
