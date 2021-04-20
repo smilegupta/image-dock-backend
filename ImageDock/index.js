@@ -147,9 +147,12 @@ async function getRecentUploads() {
 }
 
 /**
- * @apiName Get recent uploads
- * @apiGroup Recent Uploads
+ * @apiName Storing Public Images
+ * @apiGroup Public Images
  * @api {get} /recent-uploads    Get the recent image uploads
+ *
+ * @apiParam {String} imageUrl         image URL getting added to the collection
+ *
  * @apiContentType application/json
  * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/recent-uploads
  */
@@ -177,6 +180,10 @@ async function storeImage(imageUrl) {
  * @apiName Delete Collection
  * @apiGroup Collection
  * @api {delete} /collection/{collectionId}   Delete user's Collections
+ *
+ * @apiParam {String} collectionId     id of the collection for which the data is requested for
+ * @apiParam {String} userId           userId of the person logged-in
+ *
  * @apiContentType application/json
  * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/collection/{collectionId}
  */
@@ -200,6 +207,12 @@ async function deleteCollection(collectionId, userId) {
  * @apiName Update Collection
  * @apiGroup Collection
  * @api {put} /collection/{collectionId}   Update user's Collections
+ *
+ * @apiParam {String} collectionId     id of the collection for which the data is requested for
+ * @apiParam {String} userId           userId of the person logged-in
+ * @apiParam {String} collectionName   name of the collection to which the image is getting added
+ * @apiParam {String} collectionDescription   description of the collection to which the image is getting added
+ *
  * @apiContentType application/json
  * @apiSampleRequest https://xlpyxuiddk.execute-api.ap-south-1.amazonaws.com/dev/collection/{collectionId}
  */
