@@ -4,12 +4,6 @@ const { S3_BUCKET } = process.env;
 // Create an s3 instance
 const s3 = new AWS.S3();
 
-// List of headers to be passed in the response
-const headers = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Credentials": true
-}
-
 async function uploadImage(params) {
   // Function to upload image to s3.
   try {
@@ -53,9 +47,5 @@ exports.handler = async event => {
   };
   const response = await uploadImage(params);
   console.log("response", response);
-  return {
-    headers,
-    statusCode: 200,
-    body: response
-  };
+  return response;
 };
